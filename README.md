@@ -207,5 +207,5 @@ An API that lets you send websocket connections, between the server and client f
 Contact us at [parkingmaster@email.com](mailto:parkingmaster@email.com)
 
 ## License
-**MIT** | Licensed under the [MIT License](https://mit-license.org)
+**MIT** | Licensed under the [MIT License](https://mit-license.org)<br>
 https://gihub.com/Parking-Master/Gametime.js/blob/main/LICENSE
