@@ -7,11 +7,11 @@ But first, you'll need to [sign up for PubNub](https://dashboard.pubnub.com/sign
 
 ### Quickstart
 ###### Regular version
-```
+```html
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Parking-Master/Gametime.js@latest/Gametime.js"></script>
 ```
 ###### Minified version
-```
+```html
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Parking-Master/Gametime.js@latest/Gametime.min.js"></script>
 ```
 ##### <sup>Place the "script" tag in the "head" element.</sup>
@@ -174,4 +174,38 @@ Open it in your browser, and try playing the multiplayer game!
 Good luck!
 
 ### Other functions and APIs
-#### Getting user UUID
+<details>
+<summary>Getting user UUID</summary>
+
+```javascript
+gametime.user.id
+// "81d11559-560b-4d62-a9a7-f90d364e2bfd"
+```
+</details>
+
+<details>
+<summary>Getting current Channel</summary>
+
+```javascript
+gametime.channel
+// "example123"
+```
+</details>
+
+<hr>
+
+## Help / Support
+### Definitions
+#### Game Channel
+The "Channel" The specific player is on (page), that will recieve the messages.<br>
+It can be set with `gametime.set`: `gametime.set("channel", "channel-name")`
+
+#### PubNub
+An API that lets you send websocket connections, between the server and client for making chat applications, etc.
+
+### Support
+Contact us at [parkingmaster@email.com](mailto:parkingmaster@email.com)
+
+## License
+**MIT** | Licensed under the [MIT License](https://mit-license.org)
+https://gihub.com/Parking-Master/Gametime.js/blob/main/LICENSE
