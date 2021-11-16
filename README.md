@@ -83,87 +83,83 @@ gametime.run("yourEvent", [param1, param2]);
 Here is a pre-built basic car game, showing how easy it is to make a multiplayer game, in less than 100 lines of _JavaScript_ code.
 
 First, we'll initialize Gametime.js, make the events, and run the events on click of a button:
-###### JavaScript
-```javascript
-// Set the keys and channel
-gametime.set("key", "pub-x-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", "sub-x-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-gametime.set("channel", "example123");
-
-// Create the events
-gametime.make("drive");
-gametime.make("reverse");
-
-let x, y;
-var animate;
-var canvas = document.querySelector("canvas");
-var context = canvas.getContext("2d");
-var carWidth = 65;
-var carHeight = 105;
- 
-x = canvas.width / 2 - carWidth;
-y = canvas.height / 2 - carHeight;
-
-function driveCar() {
-   context.clearRect(0, 0, canvas.width, canvas.height);
-   context.beginPath();
-   context.fillStyle = "#e9e9e9";
-   context.fillRect(x, y, carWidth, carHeight);
-   context.fill();
-   
-   animate = requestAnimationFrame(driveCar);
-   x += 4;
-}
-function driveCar() {
-   context.clearRect(0, 0, canvas.width, canvas.height);
-   context.beginPath();
-   context.fillStyle = "#e9e9e9";
-   context.fillRect(x, y, carWidth, carHeight);
-   context.fill();
-   
-   animate = requestAnimationFrame(driveCar);
-   x += -3.5;
-}
-function stopCar(type) {
-   if (type == "drive") {
-     cancelAnimationFrame(driveCar);
-   } else if (type == "reverse") {
-     cancelAnimationFrame(reverseCar);
-   }
-}
-
-gametime.on("drive", driveCar);
-gametime.on("reverse", reverseCar);
-gametime.on("stop", stopCar);
-```
 ###### HTML
 ```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Multiplayer game</title>
-    <script src="https://cdn.jsdelivr.net/gh/Parking-Master/Gametime.js@latest/Gametime.js"></script>
+    <title>Gametime.js Multiplayer Chat</title>
+    <style>
+      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; } #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
+      #input:focus { outline: none; } #form button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages > li { padding: 0.5rem 1rem; }
+      #messages > li:nth-child(odd) { background: #efefef; }
+      #input:disabled, form button:disabled { opacity: 0.5; }
+    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Parking-Master/Gametime.js@latest/Gametime.js"></script>
   </head>
   <body>
-    <button onmousedown="drive()" ontouchstart="drive()" onmouseup="stop('drive')" ontouchend="stop('drive')"stop>Drive</button>
-    <button onmousedown="reverse()" ontouchstart="reverse()" onmouseup="stop('reverse')" ontouchend="stop('reverse')">Reverse</button>
-    
-    <canvas style="border: 1px solid lightgrey;" width="600" height="400"></canvas>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button class="send">Send</button><button class="disconnect">Disconnect</button>
+    </form>
     <script>
-      function drive() {
-        gametime.run("drive");
+      gametime.set("key", "pub-x-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", "sub-x-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
+      gametime.set("channel", "example-channel123");
+
+      gametime.make("message");
+
+      function sendMessage(msg) {
+        var item = document.createElement("li");
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+        var chatHistory = localStorage["history"];
+        var noBug = chatHistory === "" ? "" : ",";
+        localStorage.setItem("history", (chatHistory + noBug + encodeURIComponent(msg)).split(",").toString());
       }
-      function reverse() {
-        gametime.run("reverse");
+
+      gametime.on("message", sendMessage);
+      
+      var messages = document.getElementById("messages");
+      var form = document.getElementById("form");
+      var input = document.getElementById("input");
+
+      if (!localStorage["history"]) {
+        localStorage.setItem("history", "");
+      } else {
+        for (var i = 0; i < localStorage["history"].split(",").length; i++) {
+          var item = document.createElement("li");
+          item.textContent = decodeURIComponent(localStorage["history"].split(",")[i]);
+          messages.appendChild(item);
+          window.scrollTo(0, document.body.scrollHeight);
+        }
       }
-      function stop(type) {
-        gametime.run("stop", [type]);
-      }
+      
+      form.onsubmit = function(event) {
+        event.preventDefault();
+        if (input.value) {
+          gametime.run("message", [input.value]);
+          input.value = "";
+        }
+      };
+
+      document.querySelector(".disconnect").onclick = function(event) {
+        event.preventDefault();
+        if (confirm("Are you sure?")) {
+          this.textContent = "Reconnect";
+          gametime.disconnect();
+          localStorage.removeItem("history");
+          messages.innerHTML = "";
+          document.querySelector(".disconnect").disabled = "disabled", document.querySelector(".send").disabled = "disabled", input.disabled = "disabled";
+        }
+      };
     </script>
   </body>
 </html>
 ```
-
 Open it in your browser, and try playing the multiplayer game!
 
 ### Next step: Customize it
