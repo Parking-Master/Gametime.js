@@ -16,8 +16,8 @@ But first, you'll need to [sign up for PubNub](https://dashboard.pubnub.com/sign
 ```
 ##### <sup>Place the "script" tag in the "head" element.</sup>
 
-\- [Download the regular file here](https://parking-master.github.io/Gametime.js/download.html?download=js)<br>
-\- [Download the minified file here](https://parking-master.github.io/Gametime.js/download.html?download=min)
+\- [Download the regular file here](https://parking-master.github.io/Gametime.js/downloads/download.html?download=js)<br>
+\- [Download the minified file here](https://parking-master.github.io/Gametime.js/downloads/download.html?download=min)
 
 ### Documentation
 #### 1. Initialize Gametime.js
