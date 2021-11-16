@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/gh/rndme/download/download.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const downloadParam = (new URLSearchParams(location.search).get('download'));
+      if (downloadParam && downloadParam == 'min') {
+        download('/SecurityJS.128/SecurityJS.128.min.js');
+      } else if (downloadParam == 'js') {
+        download('/SecurityJS.128/SecurityJS.128.js');
+      }
+    </script>
+  </body>
+</html>
