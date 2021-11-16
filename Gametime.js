@@ -1,59 +1,48 @@
-/*
+/**
   * @license
-  * 2021 Parking Master
-  * Licensed under the MIT License (https://mit-license.org/)
-  * More license and copyright information at https://github.com/Parking-Master/Gametime.js/LICENSE
+  * Copyright (c) 2021 Parking-Master / (Gametime.js)
+  * Licensed under the MIT License (https://mit-license.org)
+  * More license and copyright information at https://github.com/Parking-Master/Gametime.js/blob/main/LICENSE
 */
-function setCookie(e, t, n) {
+function setCookie(e, n, t) {
     var i = "";
-    if (n) {
+    if (t) {
         var o = new Date;
-        o.setTime(o.getTime() + 24 * n * 60 * 60 * 1e3), i = "; expires=" + o.toUTCString()
+        o.setTime(o.getTime() + 24 * t * 60 * 60 * 1e3), i = "; expires=" + o.toUTCString()
     }
-    document.cookie = e + "=" + (t || "") + i + "; path=/"
+    document.cookie = e + "=" + (n || "") + i + "; path=/"
 }
 
 function getCookie(e) {
-    for (var t = e + "=", n = document.cookie.split(";"), i = 0; i < n.length; i++) {
-        for (var o = n[i];
+    for (var n = e + "=", t = document.cookie.split(";"), i = 0; i < t.length; i++) {
+        for (var o = t[i];
             " " == o.charAt(0);) o = o.substring(1, o.length);
-        if (0 == o.indexOf(t)) return o.substring(t.length, o.length)
+        if (0 == o.indexOf(n)) return o.substring(n.length, o.length)
     }
     return null
 }
+var pubnub;
 window.addEventListener("beforeunload", (() => {
     setCookie("pubnub-time-token", `${(new Date).getTime()}0000`, 10)
-}));
-var pubnub;
-window.gametime = {}, window.gametime.events = [], window.gametime.events.functions = [], gametime.set = function(e, n, t) {
+})), window.gametime = {}, window.gametime.events = [], window.gametime.events.functions = [], gametime.connected = !1, gametime.set = function(e, n, t) {
     return function(e, n, t) {
         if ("key" == e) {
             let e = n,
-                m = t;
+                u = t;
             var i = document.createElement("script");
             i.src = "https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.min.js", document.body.appendChild(i);
             var o = setInterval((function() {
                 if ("undefined" != typeof PubNub) {
                     clearInterval(o);
-                    const t = PubNub.generateUUID();
+                    const n = PubNub.generateUUID();
                     pubnub = new PubNub({
                         publishKey: e,
-                        subscribeKey: m,
-                        uuid: `${t}`
-                    }), gametime.user = {}, gametime.user.id = t;
-                    var n = !1;
+                        subscribeKey: u,
+                        uuid: n
+                    }), gametime.user = {}, gametime.user.id = n;
                     pubnub.addListener({
                         message: function(e) {
-                            if (0 == n) {
-                                n = !0, setTimeout((() => {
-                                    n = !1
-                                }), 300);
-                                var t = document.createElement("script"),
-                                    i = "(" + decodeURIComponent(e.message) + ")();";
-                                t.textContent = i, document.body.appendChild(t), t.onload = () => {
-                                    t.remove()
-                                }
-                            }
+                            new Function("(" + decodeURIComponent(e.message) + ")();")()
                         },
                         presence: function(e) {
                             console.log(e.uuid)
@@ -65,7 +54,8 @@ window.gametime = {}, window.gametime.events = [], window.gametime.events.functi
                             channel: gametime.channel,
                             message: e
                         }, (function(e, n) {
-                            if (e.error) throw new Error("Connection failed (Gametime.js), make sure the Publish/Subscribe keys are correct")
+                            if (e.error) throw new Error("Connection failed (Gametime.js), make sure the Publish/Subscribe keys are correct");
+                            gametime.connected = !0
                         }))
                     }), 3e3)
                 }
@@ -74,6 +64,11 @@ window.gametime = {}, window.gametime.events = [], window.gametime.events.functi
             pubnub.subscribe({
                 channels: [n],
                 timetoken: getCookie("pubnub-time-token"),
+                message: function(e) {
+                    if ("unsubscribe" == e.type) return pubnub.unsubscribe({
+                        channel: e.channel
+                    })
+                },
                 withPresence: !0
             })
         }), 900) : pubnub.subscribe({
@@ -89,17 +84,22 @@ window.gametime = {}, window.gametime.events = [], window.gametime.events.functi
         if (!(window.gametime.events.indexOf(e) > -1)) throw new ReferenceError('Event "' + e.toString() + '" not found');
         var t = document.createElement("script"),
             i = (n = n.toString()).split("{")[0],
-            o = n.split("{").pop();
-        n = i + "{pubnub.publish({channel:'" + gametime.channel + "',message:'" + encodeURIComponent(n) + "'});" + o, t.textContent = "gametime.events.functions." + e + " = (" + n + ");", document.body.appendChild(t)
+            o = n.toString().split("{")[0].split("(").pop().split(")").shift(),
+            u = n.split("{").pop();
+        o = o || "undefined";
+        n = i + "{pubnub.publish({channel:'" + gametime.channel + "',message:'" + (encodeURIComponent(i) + "{var " + o + ' = "ncmmmasptr__ + ' + o + ' + ncmmmasptr__";' + encodeURIComponent(u)).replace(/\'/g, "\\'").replace(/ncmmmasptr__/g, "'") + "'});}", t.textContent = "gametime.events.functions." + e + " = " + n + ";", document.body.appendChild(t)
     }(e, n)
-}, gametime.run = function(e, n) {
+}, gametime.recursion = 0, gametime.run = function(e, n) {
     return function(e, n) {
-        n = n ? n : "";
-        for (var t = document.createElement("script"), i = [], o = 0; o < n.length; o++) i.push('"' + n[o] + '"'), t.textContent = "gametime.events.functions." + e + "(" + i + ")";
-        document.body.appendChild(t)
+        n && void 0 !== n || (n = [""]);
+        for (var t = [], i = 0; i < n.length; i++) t.push('"' + n[i] + '"'), new Function("gametime.events.functions." + e + "(" + t + ")")()
     }(e, n)
-}, window.addEventListener("load", (function() {
-    document.querySelector('input[name="gametime-users-connected"]') || (document.body.innerHTML += '<input type="hidden" name="gametime-users-connected" value="0" />'), gametime.make("connectedUserQuery"), gametime.on("connectedUserQuery", (function() {
-        document.querySelector('input[name="gametime-users-connected"]').value = (parseFloat(document.querySelector('input[name="gametime-users-connected"]').value, 0) + 1).toString(), gametime.user.connectedUsers = document.querySelector('input[name="gametime-users-connected"]').value
-    }))
-})), window.gametime.join = {}, gametime.join.maxLength = 2, gametime.join.minLength = 2;
+}, window.gametime.join = {}, gametime.join.maxLength = 2, gametime.join.minLength = 2, gametime.disconnect = function() {
+    gametime.connected = !1, pubnub.publish({
+        channel: "control",
+        message: {
+            command: "unsubscribe",
+            channel: "channel_to_unsubscribe"
+        }
+    }), pubnub = void 0
+}, (gametime.join.channel = (cname) => {});
