@@ -36,17 +36,18 @@ gametime.set("key", "PUBLISH_KEY", "SUBSCRIBE_KEY");
 ```
 Replace "PUBLISH_KEY" and "SUBSCRIBE_KEY" with your Publish / Subscribe keys.
 
-Now you just need to define your [Game Channel]():
+Now you just need to define your [Game Channel](#game-channel):
 ```javascript
-gametime.set("channel", "channel-name");
+gametime.set("channel", "channel_name");
 ```
 ###### The channel name will be the channel for players to send messages between the page.
 
-Now you can make your game!
+_Now you can make your game!_
 
 #### 2. How Gametime.js functions work
 _All Gametime.js functions always start with "gametime"._<br>
 Custom functions runned should **always** be [Pure and Defined JavaScript functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions).
+
 #### 3. Using Gametime.js functions
 Create a new event listener with `make()`:
 ```javascript
@@ -78,7 +79,7 @@ You can pass paramaters through the function too, using an `Array`:
 gametime.run("yourEvent", [param1, param2]);
 ```
 
-#### 3. The example game
+#### 4. The example game
 Here is a pre-built basic car game, showing how easy it is to make a multiplayer game, in less than 100 lines of _JavaScript_ code.
 
 First, we'll initialize Gametime.js, make the events, and run the events on click of a button:
