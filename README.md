@@ -79,8 +79,8 @@ You can pass paramaters through the function too, using an `Array`:
 gametime.run("yourEvent", [param1, param2]);
 ```
 
-#### 4. The example game
-Here is a pre-built basic car game, showing how easy it is to make a multiplayer game, in less than 100 lines of _JavaScript_ code.
+#### 4. The example app
+Here is a pre-built basic chat room, showing how easy it is to make a multiplayer game / chat application, in less than 50 lines of _JavaScript_ code.
 
 First, we'll initialize Gametime.js, make the events, and run the events on click of a button:
 ###### HTML
@@ -160,6 +160,7 @@ First, we'll initialize Gametime.js, make the events, and run the events on clic
   </body>
 </html>
 ```
+
 Open it in your browser, and try playing the multiplayer game!
 
 ### Next step: Customize it
