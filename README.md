@@ -161,7 +161,7 @@ First, we'll initialize Gametime.js, make the events, and run the events on clic
 </html>
 ```
 
-Open it in your browser, and try playing the multiplayer game!
+Open it in your browser, and try chatting through different devices!
 
 ### Next step: Customize it
 > What will You build with Gametime.js?<br>
