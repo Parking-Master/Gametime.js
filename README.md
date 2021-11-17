@@ -58,7 +58,7 @@ This will make your event noticable through Gametime.js.
 Define your new event by attaching it with `on()`:
 ```javascript
 function yourFunction() {
-    // Function that will run like a multiplayer game
+  // Function that will run like a multiplayer game
 }
 
 gametime.on("yourEvent", yourFunction);
