@@ -163,6 +163,71 @@ First, we'll initialize Gametime.js, make the events, and run the events on clic
 
 Open it in your browser, and try chatting through different devices!
 
+#### 5. Using jQuery
+As jQuery grows, you know you need to use it for the same reasons other developers use it.<br>
+Which is why there is also (_always_) a way to use jQuery for Gametime.js.
+```javascript
+// Make the event
+$(window).gametime.make("myEvent");
+
+// Define it
+function myFunction() {
+  // Code here
+}
+$(window).gametime.on("myEvent", myFunction);
+
+// Run it
+$(window).gametime.run("myEvent");
+
+// To pass parameters
+$(window).gametime.run("myEvent", [param1, param2]);
+```
+
+#### 6. Using Swifty
+Swifty is a simple JavaScript libary.<br>
+You use it for R.F.N.S. (Restricted File Notation System).<br>
+RFNS Is used for non-script and non-files.
+###### Example
+```
+Valid
+<swift>
+// Code here
+</swift>
+```
+```
+Invalid
+<script src="myfile.js"></script>
+```
+An example code of Swifty looks like this:
+```
+[ swift version 0.1 ]
+
+function myFunction = func(...params) {
+  # This is a comment
+  $pop(params)
+}
+variable myVariable = "";
+```
+In Swifty, you should never use single quotes (' ')<br>
+Swifty is basically a JavaScript library for running off-javascript functions.
+
+You can even use Swifty for Gametime.js.
+```
+[ swift version 0.1 ]
+
+gametime.make("myEvent")
+
+function myFunction = func(...params) {
+  // Code here
+}
+
+gametime.on("myEvent", myFunction)
+
+constant params = [undefined]
+
+gametime.run("myEvent", params)
+```
+
 ### Next step: Customize it
 > What will You build with Gametime.js?<br>
 > Whatever it is, whether it is a:<br>
@@ -187,6 +252,31 @@ gametime.user.id
 ```javascript
 gametime.channel
 // "example123"
+```
+</details>
+
+<details>
+<summary>Disconnecting</summary>
+
+```javascript
+gametime.disconnect();
+```
+</details>
+
+<details>
+<summary>Disconnecting all users</summary>
+
+```javascript
+gametime.disconnectAll();
+```
+</details>
+
+<details>
+<summary>Joining a new channel</summary>
+
+```javascript
+gametime.disconnect();
+gametime.set("channel", "new_channel");
 ```
 </details>
 
