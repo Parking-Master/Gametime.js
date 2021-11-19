@@ -1,4 +1,4 @@
-# Gametime.js
+# [Gametime.js](https://parking-master.github.io/Gametime.js/)
 A client-side multiplayer game library to make multiplayer games in less than 100 lines of code, using [PubNub's](https://pubnub.com) API.
 
 ## Welcome to Gametime.js!
