@@ -24,7 +24,7 @@ function getCookie(e) {
 var pubnub;
 window.addEventListener("beforeunload", (() => {
     setCookie("pubnub-time-token", `${(new Date).getTime()}0000`, 10)
-})), window.gametime = {}, window.gametime.events = [], window.gametime.events.functions = [], gametime.connected = !1, gametime.set = function(e, n, t) {
+})), window.gametime = {}, gametime.onconnect = null, window.gametime.events = [], window.gametime.events.functions = [], gametime.connected = !1, gametime.set = function(e, n, t) {
     return function(e, n, t) {
         if ("key" == e) {
             let e = n,
@@ -54,8 +54,14 @@ window.addEventListener("beforeunload", (() => {
                             channel: gametime.channel,
                             message: e
                         }, (function(e, n) {
-                            if (e.error) throw new Error("Connection failed (Gametime.js), make sure the Publish/Subscribe keys are correct");
-                            gametime.connected = !0
+                            if (e.error) {
+                              throw new Error("Connection failed (Gametime.js), make sure the Publish/Subscribe keys are correct");
+                              gametime.connected = !0
+                            } else {
+                              if (typeof gametime.onconnect == "function") {
+                                gametime.onconnect();
+                              }
+                            }
                         }))
                     }), 3e3)
                 }
@@ -85,7 +91,7 @@ window.addEventListener("beforeunload", (() => {
         var t = document.createElement("script"),
             i = (n = n.toString()).split("{")[0],
             o = n.toString().split("{")[0].split("(").pop().split(")").shift(),
-            u = n.split("{").pop();
+            u = n.substring(n.indexOf('{') + 1);
         o = o || "undefined";
         n = i + "{pubnub.publish({channel:'" + gametime.channel + "',message:'" + (encodeURIComponent(i) + "{var " + o + ' = "ncmmmasptr__ + ' + o + ' + ncmmmasptr__";' + encodeURIComponent(u)).replace(/\'/g, "\\'").replace(/ncmmmasptr__/g, "'") + "'});}", t.textContent = "gametime.events.functions." + e + " = " + n + ";", document.body.appendChild(t)
     }(e, n)
