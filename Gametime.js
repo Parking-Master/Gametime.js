@@ -105,7 +105,7 @@ window.addEventListener("beforeunload", (() => {
         channel: "control",
         message: {
             command: "unsubscribe",
-            channel: "channel_to_unsubscribe"
+            channel: gametime.channel
         }
     }), pubnub = void 0
 }, (gametime.join.channel = (cname) => {});
