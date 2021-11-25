@@ -197,19 +197,19 @@ As jQuery grows, you know you need to use it for the same reasons other develope
 Which is why there is also (_always_) a way to use jQuery for Gametime.js.
 ```javascript
 // Make the event
-$(window).gametime.make("myEvent");
+$(window)[0].gametime.make("myEvent");
 
 // Define it
 function myFunction() {
   // Code here
 }
-$(window).gametime.on("myEvent", myFunction);
+$(window)[0].gametime.on("myEvent", myFunction);
 
 // Run it
-$(window).gametime.run("myEvent");
+$(window)[0].gametime.run("myEvent");
 
 // To pass parameters
-$(window).gametime.run("myEvent", [param1, param2]);
+$(window)[0].gametime.run("myEvent", [param1, param2]);
 ```
 
 #### 6. Using Swifty
@@ -217,42 +217,28 @@ Swifty is a simple JavaScript libary.<br>
 You use it for R.F.N.S. (Restricted File Notation System).<br>
 RFNS Is used for non-script and non-files.
 ###### Example
-```
-Valid
+```html
 <swift>
-// Code here
+  // Code here
 </swift>
 ```
-```
-Invalid
-<script src="myfile.js"></script>
-```
-An example code of Swifty looks like this:
-```
-[ swift version 0.1 ]
 
-function myFunction = func(...params) {
-  # This is a comment
-  $pop(params)
-}
-variable myVariable = "";
-```
-In Swifty, you should never use single quotes (' ')<br>
-Swifty is basically a JavaScript library for running off-javascript functions.
+In Swifty.js, you should never use single quotes (' ')<br>
+Swifty.js is basically a JavaScript library for running off-javascript functions.
 
-You can even use Swifty for Gametime.js.
+You can even use Swifty.js for Gametime.js.
 ```
-[ swift version 0.1 ]
+[ swift version 0.3 ]
 
 gametime.make("myEvent")
 
-function myFunction = func(...params) {
+FUNCTION myFunction = FUNC(...any) {
   // Code here
 }
 
 gametime.on("myEvent", myFunction)
 
-constant params = [undefined]
+constant params = [""]
 
 gametime.run("myEvent", params)
 ```
