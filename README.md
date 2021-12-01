@@ -1,4 +1,6 @@
-# [Gametime.js](https://gametimejs.servehttp.com)
+# Gametime.js
+[Gametimejs.ServeHTTP.com](https://gametimejs.servehttp.com)<br>
+
 A client-side multiplayer game library to make multiplayer games in less than 100 lines of code, using [PubNub's](https://pubnub.com) API.
 
 ## Welcome to Gametime.js!
