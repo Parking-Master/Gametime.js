@@ -24,7 +24,7 @@ function getCookie(e) {
 var pubnub;
 window.addEventListener("beforeunload", (() => {
     setCookie("pubnub-time-token", `${(new Date).getTime()}0000`, 10)
-})), window.gametime = {}, gametime.onconnect = null, window.gametime.events = [], window.gametime.events.functions = [], gametime.connected = !1, gametime.set = function(e, n, t) {
+})), window.gametime = {}, gametime.onconnect = null, gametime.ondisconnect = null, window.gametime.events = [], window.gametime.events.functions = [], gametime.connected = !1, gametime.set = function(e, n, t) {
     return function(e, n, t) {
         if ("key" == e) {
             let e = n,
@@ -107,5 +107,5 @@ window.addEventListener("beforeunload", (() => {
             command: "unsubscribe",
             channel: gametime.channel
         }
-    }), pubnub = void 0
-}, (gametime.join.channel = (cname) => {});
+    }), pubnub = void 0, typeof gametime.disconnect == "function" && gametime.disconnect()
+}
