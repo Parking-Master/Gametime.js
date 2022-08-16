@@ -48,7 +48,7 @@ _Now you can make your game!_
 
 #### 2. How Gametime.js functions work
 _All Gametime.js functions always start with "gametime"._<br>
-Custom functions runned should **always** be [Pure and Defined JavaScript functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions).<br>
+Custom gametime functions should __never__ be [Native JavaScript functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions).<br>
 ###### Example:
 ```javascript
 // WRONG
@@ -61,15 +61,14 @@ function someFunction(...msg) {
 gametime.on("someEvent", someFunction);
 ```
 
-Gametime.js has to parse functions through a string, so when it gets the message it looks something like this:
+Gametime.js has to parse functions through a string, so when it gets the "Native JavaScript" message it looks something like this:
 ```javascript
 function alert() {
   [native code]
 }
 ```
 
-Try running it in the console and see what happens.<br>
-_Always_ use pre-defined functions.<br>
+In Gametime.js, always use defined functions, not native functions.<br>
 Also, Gametime.js is case-sensitive when it comes to event names.
 ```javascript
 // WRONG
